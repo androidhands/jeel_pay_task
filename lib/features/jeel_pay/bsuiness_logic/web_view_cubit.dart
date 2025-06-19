@@ -7,6 +7,7 @@ part 'web_view_state.dart';
 class WebViewCubit extends Cubit<WebViewState> {
   late final WebViewController controller;
   WebViewCubit() : super(WebViewInitial());
+
   /// TODO: search how to get web view height from java script
   void loadWebView() {
     final PlatformWebViewControllerCreationParams params =
@@ -26,20 +27,23 @@ class WebViewCubit extends Cubit<WebViewState> {
           },
           onPageFinished: (String url) {
             emit(WebViewLoaded());
+            debugPrint('Page finished loading: $url');
           },
           onWebResourceError: (WebResourceError error) {
             emit(WebViewError(message: error.description));
+            debugPrint('Web resource error: ${error.description}');
           },
           onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://jeel.co.')) {
+            if (request.url.startsWith('https://jeel.co')) {
               debugPrint('blocking navigation to ${request.url}');
-              return NavigationDecision.prevent;
+              return NavigationDecision.navigate;
             }
             debugPrint('allowing navigation to ${request.url}');
             return NavigationDecision.navigate;
           },
           onHttpError: (HttpResponseError error) {
             emit(WebViewError(message: error.toString()));
+            debugPrint('HTTP error: ${error.toString()}');
           },
           onUrlChange: (UrlChange change) {
             debugPrint('url change to ${change.url}');
@@ -47,8 +51,6 @@ class WebViewCubit extends Cubit<WebViewState> {
         ),
       )
       ..setOnScrollPositionChange((scrollPosition) {})
-      ..loadRequest(Uri.parse('https://jeel.co.'));
+      ..loadRequest(Uri.parse('https://jeel.co'));
   }
-
-
 }
