@@ -5,7 +5,7 @@ import 'package:jeel_pay_task/features/jeel_pay/components/first_page_compoenet.
 import 'package:jeel_pay_task/features/jeel_pay/components/second_page_component.dart';
 
 class JeelPayScreen extends StatelessWidget {
-  JeelPayScreen({Key? key}) : super(key: key);
+  const JeelPayScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
