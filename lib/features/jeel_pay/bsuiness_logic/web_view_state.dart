@@ -12,5 +12,5 @@ class WebViewLoaded extends WebViewState {}
 class WebViewError extends WebViewState {
   final String message;
 
-  WebViewError(this.message);
+  WebViewError({required this.message});
 }
