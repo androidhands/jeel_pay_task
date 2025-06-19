@@ -19,12 +19,11 @@ class WebViewCubit extends Cubit<WebViewState> {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..setNavigationDelegate(
         NavigationDelegate(
-          onProgress: (int progress) {
+          onPageStarted: (url) {
             emit(WebViewLoading());
-            debugPrint('WebView is loading: $progress%');
           },
           onPageFinished: (String url) async {
-          final hieght =   await _getWebViewHeight();
+            final hieght = await _getWebViewHeight();
             emit(WebViewLoaded(height: hieght));
             debugPrint('Page finished loading: $url');
           },
@@ -42,7 +41,7 @@ class WebViewCubit extends Cubit<WebViewState> {
           },
           onHttpError: (HttpResponseError error) {
             emit(WebViewError(message: error.toString()));
-            debugPrint('HTTP error: ${error.toString()}');
+            debugPrint('HTTP error: ${error}');
           },
           onUrlChange: (UrlChange change) {
             debugPrint('url change to ${change.url}');
