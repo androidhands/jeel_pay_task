@@ -13,8 +13,11 @@ class JeelPayScreen extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          PageView(
-            children: [FirstPageCompoenet(), SecondPageComponent()],
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.8,
+            child: PageView(
+              children: [FirstPageCompoenet(), SecondPageComponent()],
+            ),
           )
         ],
       ),
