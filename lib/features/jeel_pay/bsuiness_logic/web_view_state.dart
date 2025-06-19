@@ -7,7 +7,10 @@ class WebViewInitial extends WebViewState {}
 
 class WebViewLoading extends WebViewState {}
 
-class WebViewLoaded extends WebViewState {}
+class WebViewLoaded extends WebViewState {
+  final double height;
+  WebViewLoaded({required this.height});
+}
 
 class WebViewError extends WebViewState {
   final String message;

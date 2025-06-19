@@ -9,7 +9,7 @@ class WebViewCubit extends Cubit<WebViewState> {
   WebViewCubit() : super(WebViewInitial());
 
   /// TODO: search how to get web view height from java script
-  void loadWebView() {
+  void loadWebView() async {
     final PlatformWebViewControllerCreationParams params =
         const PlatformWebViewControllerCreationParams();
 
@@ -21,12 +21,11 @@ class WebViewCubit extends Cubit<WebViewState> {
         NavigationDelegate(
           onProgress: (int progress) {
             emit(WebViewLoading());
+            debugPrint('WebView is loading: $progress%');
           },
-          onPageStarted: (String url) {
-            emit(WebViewLoading());
-          },
-          onPageFinished: (String url) {
-            emit(WebViewLoaded());
+          onPageFinished: (String url) async {
+          final hieght =   await _getWebViewHeight();
+            emit(WebViewLoaded(height: hieght));
             debugPrint('Page finished loading: $url');
           },
           onWebResourceError: (WebResourceError error) {
@@ -52,5 +51,18 @@ class WebViewCubit extends Cubit<WebViewState> {
       )
       ..setOnScrollPositionChange((scrollPosition) {})
       ..loadRequest(Uri.parse('https://jeel.co'));
+  }
+
+  Future<double> _getWebViewHeight() async {
+    try {
+      final result = await controller
+          .runJavaScriptReturningResult('document.body.scrollHeight');
+      print('WebView height: $result');
+      return double.tryParse(result.toString()) ?? 600.0;
+    } catch (e) {
+      debugPrint('Error getting web view height: $e');
+      emit(WebViewError(message: e.toString()));
+      throw Exception('Failed to get web view height: $e');
+    }
   }
 }
