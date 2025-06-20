@@ -15,7 +15,7 @@ class JeelPayApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const JeelPayScreen(),
+      home:  JeelPayScreen(),
     );
   }
 }

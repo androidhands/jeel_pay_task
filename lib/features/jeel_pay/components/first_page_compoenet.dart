@@ -14,44 +14,46 @@ class FirstPageCompoenet extends StatelessWidget {
   Widget build(BuildContext context) {
     final webViewCubit = context.read<WebViewCubit>();
 
-    return Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Text("Hello Jeel Pay"),
-      SizedBox(
-        height: 10,
-      ),
-      BlocBuilder<WebViewCubit, WebViewState>(
-        builder: (context, state) {
-          if (state is WebViewLoading) {
-            return Center(child: CircularProgressIndicator());
-          } else if (state is WebViewError) {
-            return Center(child: Text('Error: ${state.message}'));
-          } else if (state is WebViewLoaded) {
-            return Expanded(
-              child: SizedBox(
-                  height: state.height,
-                  child: WebViewWidget(
-                    controller: webViewCubit.controller,
-                    gestureRecognizers: Set()
-                      ..add(
-                        Factory<VerticalDragGestureRecognizer>(() =>
-                            VerticalDragGestureRecognizer()), // this fixed scroll freezing of web view
-                      ),
-                  )),
-            );
-          } else {
-            return SizedBox.shrink();
-          }
-        },
-      ),
-      SizedBox(
-        height: 10,
-      ),
-      ElevatedButton(
-        onPressed: () {
-          webViewCubit.controller.loadRequest(Uri.parse('https://jeel.co'));
-        },
-        child: const Text('Reload'),
-      ),
-    ]);
+    return Expanded(
+      child:
+          Column(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        Text("Hello Jeel Pay"),
+        SizedBox(
+          height: 10,
+        ),
+        BlocBuilder<WebViewCubit, WebViewState>(
+          builder: (context, state) {
+            if (state is WebViewLoading) {
+              return Center(child: CircularProgressIndicator());
+            } else if (state is WebViewError) {
+              return Center(child: Text('Error: ${state.message}'));
+            } else if (state is WebViewLoaded) {
+              return SizedBox(
+                height: state.height,
+                child: WebViewWidget(
+                  controller: webViewCubit.controller,
+                  gestureRecognizers: Set()
+                    ..add(
+                      Factory<VerticalDragGestureRecognizer>(() =>
+                          VerticalDragGestureRecognizer()), // this fixed scroll freezing of web view
+                    ),
+                ),
+              );
+            } else {
+              return SizedBox.shrink();
+            }
+          },
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        ElevatedButton(
+          onPressed: () {
+            webViewCubit.controller.loadRequest(Uri.parse('https://jeel.co'));
+          },
+          child: const Text('Reload'),
+        ),
+      ]),
+    );
   }
 }
