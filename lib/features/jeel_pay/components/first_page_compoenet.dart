@@ -29,8 +29,7 @@ class FirstPageCompoenet extends StatelessWidget {
               height: state.height,
               child: WebViewWidget(
                 controller: webViewCubit.controller,
-                gestureRecognizers: Set()
-                  ..add(
+                gestureRecognizers: Set()..add(
                     Factory<VerticalDragGestureRecognizer>(() =>
                         VerticalDragGestureRecognizer()), // this fixed scroll freezing of web view
                   ),
