@@ -6,7 +6,7 @@ void main() {
 }
 
 class JeelPayApp extends StatelessWidget {
-  const JeelPayApp({Key? key}) : super(key: key);
+  const JeelPayApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class JeelPayApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home:  JeelPayScreen(),
+      home: JeelPayScreen(),
     );
   }
 }

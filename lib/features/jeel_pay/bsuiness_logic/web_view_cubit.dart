@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:jeel_pay_task/features/utils/constants.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 part 'web_view_state.dart';
@@ -32,7 +33,7 @@ class WebViewCubit extends Cubit<WebViewState> {
             debugPrint('Web resource error: ${error.description}');
           },
           onNavigationRequest: (NavigationRequest request) {
-            if (request.url.startsWith('https://jeel.co')) {
+            if (request.url.startsWith(Constants.webUrl)) {
               debugPrint('blocking navigation to ${request.url}');
               return NavigationDecision.navigate;
             }
@@ -41,7 +42,7 @@ class WebViewCubit extends Cubit<WebViewState> {
           },
           onHttpError: (HttpResponseError error) {
             emit(WebViewError(message: error.toString()));
-            debugPrint('HTTP error: ${error}');
+            debugPrint('HTTP error: $error');
           },
           onUrlChange: (UrlChange change) {
             debugPrint('url change to ${change.url}');
@@ -49,7 +50,7 @@ class WebViewCubit extends Cubit<WebViewState> {
         ),
       )
       ..setOnScrollPositionChange((scrollPosition) {})
-      ..loadRequest(Uri.parse('https://jeel.co'));
+      ..loadRequest(Uri.parse(Constants.webUrl));
   }
 
   Future<double> _getWebViewHeight() async {
