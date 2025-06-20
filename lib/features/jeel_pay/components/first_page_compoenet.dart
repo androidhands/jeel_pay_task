@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:jeel_pay_task/features/jeel_pay/bsuiness_logic/web_view_cubit.dart';
+import 'package:jeel_pay_task/features/jeel_pay/bloc/web_view_cubit.dart';
 import 'package:jeel_pay_task/features/utils/constants.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
